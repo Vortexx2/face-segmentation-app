@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="lofi" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Face Segmentation App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <div id="app">{{ message }}</div>
+    <div id="app">
+      <div class="text-center mt-3">
+        <h1 class="text-3xl">Face Segmentation</h1>
+      </div>
+      <main class="flex">
+        <div>
+          <video autoplay ref="webcam"></video>
+        </div>
+      </main>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>
