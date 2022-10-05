@@ -22,10 +22,10 @@
           >
         </div>
       </div>
-      <main class="flex px-10 mt-5 gap-3">
+      <main class="flex px-10 mt-5 gap-3 content-start">
         <div class="w-full h-full">
           <!-- webcam display -->
-          <video autoplay ref="webcam" class="w-full h-[540px]"></video>
+          <video autoplay ref="webcam" class="w-full h-[540px] -mt-[3px]"></video>
 
           <!-- Camera interaction buttons -->
           <div class="flex -mt-8 justify-center gap-6">
@@ -58,7 +58,7 @@
             </button>
 
             <!-- Image capture button -->
-            <button class="btn btn-circle">
+            <button @click="takePhoto" class="btn btn-circle">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
@@ -73,11 +73,11 @@
           </div>
         </div>
         <div class="w-full">
-          <canvas class="w-full h-full" v-if="photoTaken"></canvas>
-          <div v-else class="h-full w-full table">
+          <canvas v-show="photoTaken" ref="canvas" class="w-full h-[536px]"></canvas>
+          <div v-show="!photoTaken" class="h-full w-full table">
             <div class="text-lg text-center table-cell align-middle">
-              Take a photo to allow our face segmentation algorithm to perform its
-              magic!
+              Take a photo to allow our face segmentation algorithm to perform
+              its magic!
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ const app = createApp({
       isCameraOn: false,
       stream: null,
       photoTaken: false,
+      loading: false,
       cameraError: '',
     };
   },
@@ -33,15 +34,16 @@ const app = createApp({
       }
     },
 
-    // setCanvasText(text) {
-    //   const canvas =this.$refs['canvas']
-    //   const ctx = canvas.getContext("2d")
-
-    // }
-
+    async takePhoto() {
+      if (this.isCameraOn) {
+        this.photoTaken = true;
+        const canvas = this.$refs['canvas'];
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(this.$refs['webcam'], 0, 0, canvas.width, canvas.height);
+        this.loading = true;
+      }
+    },
   },
-
-
 
   mounted() {
     this.toggleVideo();
