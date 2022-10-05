@@ -73,7 +73,13 @@
           </div>
         </div>
         <div class="w-full">
-          <canvas class="w-full h-full"></canvas>
+          <canvas class="w-full h-full" v-if="photoTaken"></canvas>
+          <div v-else class="h-full w-full table">
+            <div class="text-lg text-center table-cell align-middle">
+              Take a photo to allow our face segmentation algorithm to perform its
+              magic!
+            </div>
+          </div>
         </div>
       </main>
     </div>

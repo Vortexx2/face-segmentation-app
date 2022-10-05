@@ -5,6 +5,7 @@ const app = createApp({
     return {
       isCameraOn: false,
       stream: null,
+      photoTaken: false,
       cameraError: '',
     };
   },
@@ -31,7 +32,16 @@ const app = createApp({
         this.stream.getTracks()[0].stop();
       }
     },
+
+    // setCanvasText(text) {
+    //   const canvas =this.$refs['canvas']
+    //   const ctx = canvas.getContext("2d")
+
+    // }
+
   },
+
+
 
   mounted() {
     this.toggleVideo();
