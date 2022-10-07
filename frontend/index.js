@@ -1,5 +1,8 @@
 const { createApp } = Vue;
 
+const API_URL = 'http://localhost:8000/';
+const SEGMENTATION_ENDPOINT = API_URL + 'segmentation/faces/';
+
 const app = createApp({
   data() {
     return {
@@ -35,18 +38,43 @@ const app = createApp({
     },
 
     async takePhoto() {
-      if (this.isCameraOn) {
-        this.photoTaken = true;
+      try {
+        if (this.isCameraOn) {
+          this.photoTaken = true;
 
-        // take frame of video and set it to canvas
-        const canvas = this.$refs['canvas'];
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(this.$refs['webcam'], 0, 0, canvas.width, canvas.height);
-        this.loading = true;
+          // take frame of video and set it to canvas
+          const canvas = this.$refs['canvas'];
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(
+            this.$refs['webcam'],
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          this.loading = true;
 
-        let canvasData = canvas.toDataURL();
-        canvasData = canvasData.replace(/^data:image\/png;base64,/, '');
-        console.log(canvasData)
+          let canvasData = canvas.toDataURL();
+          canvasData = canvasData.replace(/^data:image\/png;base64,/, '');
+
+          const reqBody = {
+            image: canvasData,
+            technique: 'cascade',
+          };
+
+          const response = await fetch(SEGMENTATION_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqBody),
+          }).then(res => res.json());
+
+          console.log(response);
+          this.loading = false;
+        }
+      } catch (err) {
+        console.error(err);
       }
     },
   },
