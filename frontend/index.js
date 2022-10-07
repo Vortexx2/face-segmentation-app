@@ -37,10 +37,14 @@ const app = createApp({
     async takePhoto() {
       if (this.isCameraOn) {
         this.photoTaken = true;
+
+        // take frame of video and set it to canvas
         const canvas = this.$refs['canvas'];
         const ctx = canvas.getContext('2d');
         ctx.drawImage(this.$refs['webcam'], 0, 0, canvas.width, canvas.height);
         this.loading = true;
+
+        const canvasData = canvas.toDataURL();
       }
     },
   },

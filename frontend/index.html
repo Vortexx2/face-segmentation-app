@@ -25,7 +25,11 @@
       <main class="flex px-10 mt-5 gap-3 content-start">
         <div class="w-full h-full">
           <!-- webcam display -->
-          <video autoplay ref="webcam" class="w-full h-[540px] -mt-[3px]"></video>
+          <video
+            autoplay
+            ref="webcam"
+            class="w-full h-[540px] -mt-[3px]"
+          ></video>
 
           <!-- Camera interaction buttons -->
           <div class="flex -mt-8 justify-center gap-6">
@@ -72,8 +76,72 @@
             </button>
           </div>
         </div>
-        <div class="w-full">
-          <canvas v-show="photoTaken" ref="canvas" class="w-full h-[536px]"></canvas>
+        <div class="w-full relative">
+          <canvas
+            v-show="photoTaken"
+            ref="canvas"
+            class="w-full h-[536px]"
+          ></canvas>
+          <div
+            v-if="loading"
+            class="absolute w-40 h-40 top-1/2 left-1/2 bg-primary -translate-x-1/2 -translate-y-1/2 flex justify-center content-center z-50 shadow-2xl"
+          >
+            <div class="mt-4">
+              <svg
+                width="120"
+                height="120"
+                viewBox="0 0 38 38"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <linearGradient
+                    x1="8.042%"
+                    y1="0%"
+                    x2="65.682%"
+                    y2="23.865%"
+                    id="a"
+                  >
+                    <stop stop-color="#fff" stop-opacity="0" offset="0%" />
+                    <stop
+                      stop-color="#fff"
+                      stop-opacity=".631"
+                      offset="63.146%"
+                    />
+                    <stop stop-color="#fff" offset="100%" />
+                  </linearGradient>
+                </defs>
+                <g fill="none" fill-rule="evenodd">
+                  <g transform="translate(1 1)">
+                    <path
+                      d="M36 18c0-9.94-8.06-18-18-18"
+                      id="Oval-2"
+                      stroke="url(#a)"
+                      stroke-width="2"
+                    >
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 18 18"
+                        to="360 18 18"
+                        dur="0.9s"
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                    <circle fill="#fff" cx="36" cy="18" r="1">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 18 18"
+                        to="360 18 18"
+                        dur="0.9s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
           <div v-show="!photoTaken" class="h-full w-full table">
             <div class="text-lg text-center table-cell align-middle">
               Take a photo to allow our face segmentation algorithm to perform
