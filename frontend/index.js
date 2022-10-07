@@ -44,7 +44,9 @@ const app = createApp({
         ctx.drawImage(this.$refs['webcam'], 0, 0, canvas.width, canvas.height);
         this.loading = true;
 
-        const canvasData = canvas.toDataURL();
+        let canvasData = canvas.toDataURL();
+        canvasData = canvasData.replace(/^data:image\/png;base64,/, '');
+        console.log(canvasData)
       }
     },
   },
