@@ -1,8 +1,15 @@
+import io
 from typing import Literal
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, File
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from imageio.v2 import imread
 from pydantic import BaseModel
+
+from segment import segment
+
+# Imports above
 
 app = FastAPI()
 
@@ -23,5 +30,7 @@ class FaceSegmentationBody(BaseModel):
 
 
 @app.post("/segmentation/faces")
-async def segment_faces(segmentation_request: FaceSegmentationBody):
-  return segmentation_request
+async def segment_faces(image: bytes = File()):
+  image = imread(io.BytesIO(image))
+  segmented_image = segment(image)
+  return FileResponse('myloadedfile.png')

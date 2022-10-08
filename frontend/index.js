@@ -1,7 +1,7 @@
 const { createApp } = Vue;
 
 const API_URL = 'http://localhost:8000/';
-const SEGMENTATION_ENDPOINT = API_URL + 'segmentation/faces/';
+const SEGMENTATION_ENDPOINT = API_URL + 'segmentation/faces';
 
 const app = createApp({
   data() {
@@ -54,28 +54,48 @@ const app = createApp({
           );
           this.loading = true;
 
-          let canvasData = canvas.toDataURL();
-          canvasData = canvasData.replace(/^data:image\/png;base64,/, '');
+          const response = await this.sendImage(canvas);
 
-          const reqBody = {
-            image: canvasData,
-            technique: 'cascade',
+          const imageToDraw = new Image();
+
+          imageToDraw.onload = () => {
+            ctx.drawImage(imageToDraw, 0, 0, canvas.width, canvas.height);
           };
+          imageToDraw.src = URL.createObjectURL(response);
 
-          const response = await fetch(SEGMENTATION_ENDPOINT, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reqBody),
-          }).then(res => res.json());
-
-          console.log(response);
           this.loading = false;
         }
       } catch (err) {
         console.error(err);
       }
+    },
+
+    async sendImage(canvas) {
+      let canvasData = canvas.toDataURL();
+      const file = this.dataURLtoBlob(canvasData);
+
+      const formData = new FormData();
+      formData.append('image', file);
+      const response = await fetch(SEGMENTATION_ENDPOINT, {
+        method: 'POST',
+        body: formData,
+      }).then(res => res.blob());
+
+      return response;
+    },
+
+    dataURLtoBlob(dataURL) {
+      const binary = atob(dataURL.split(',')[1]);
+
+      const array = [];
+
+      for (let i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+      }
+
+      return new Blob([new Uint8Array(array)], {
+        type: 'image/png',
+      });
     },
   },
 
