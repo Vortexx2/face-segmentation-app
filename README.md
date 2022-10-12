@@ -5,3 +5,11 @@
 
 ## Runthrough
 
+A basic runthrough is displayed below:
+![Runthrough](./face-segmentation-runthrough.gif)
+
+## Features To Implement
+
+- Diving deeper into DL, I want to implement multiple segmentation algorithms.
+- Give user option ability to choose the algorithm that will be used to perform segmentation.
+- Allow user to download the segmented images, **letting the user grasp through a basic hands on approach to image segmentation using different algorithms**.
